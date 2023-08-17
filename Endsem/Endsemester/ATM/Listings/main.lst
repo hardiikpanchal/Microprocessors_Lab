@@ -1,0 +1,221 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              04/02/2022 16:46:20 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <at89c5131.h>
+   2          #include "endsem.h"
+   3          
+   4          char S_str[6]= {0,0,0,0,0,0};   //String for Balance Sita
+   5          char G_str[6] = {0,0,0,0,0,0};  //String for Balance Gita
+   6          char n500_s[3]= {0,0,0};    // STRING FOR 500RS NOTE
+   7          char n100_s[3]= {0,0,0};    // STRING FOR 100RS NOTE
+   8          
+   9          char password[5] = {0,0,0,0,0} ;   //PASSWORD ARRAY
+  10          //Main function
+  11          
+  12          //-------------------------------------------------
+  13          void main(void)
+  14          {
+  15   1          uart_init();            // Please finish this function in endsem.h 
+  16   1        
+  17   1          while (1)
+  18   1          {
+  19   2              unsigned char ch = 0;
+  20   2              unsigned char amount1 = 0;
+  21   2              unsigned char amount2 = 0;
+  22   2            
+  23   2              unsigned int balance_Sita = 10000;
+  24   2              unsigned int balance_Gita = 10000;
+  25   2            
+  26   2              unsigned int msb = 0;
+  27   2              unsigned int lsb = 0;
+  28   2            
+  29   2              unsigned int final_w_count = 0;
+  30   2              unsigned int notes_500 = 0;
+  31   2              unsigned int notes_100 = 0;
+  32   2              
+  33   2              int_to_string(balance_Sita, S_str);
+  34   2              int_to_string(balance_Gita, G_str);
+  35   2                    
+  36   2              transmit_string("Press A for Account display and W for withdrawing cash\r\n");
+  37   2              //initial state 
+  38   2            
+  39   2              //Receive a character
+  40   2              ch = receive_char();
+  41   2          
+  42   2            if(ch == 'a' || ch == 'A'){ //Account Display
+  43   3              
+  44   3              unsigned char acc_number = 0;
+  45   3              transmit_string("Hello, Please enter Account Number\r\n");
+  46   3              
+  47   3              acc_number = receive_char();
+  48   3              
+  49   3              if(acc_number == '1'){
+  50   4                
+  51   4                transmit_string("Account Holder: Sita\r\n");
+  52   4                transmit_string("Account Balance: ");
+  53   4                transmit_string(S_str);
+  54   4                transmit_string("\r\n");
+C51 COMPILER V9.60.0.0   MAIN                                                              04/02/2022 16:46:20 PAGE 2   
+
+  55   4                
+  56   4              }
+  57   3              else if(acc_number == '2'){
+  58   4                
+  59   4                transmit_string("Account Holder: Gita\r\n");
+  60   4                transmit_string("Account Balance: ");
+  61   4                transmit_string(G_str);
+  62   4                transmit_string("\r\n");
+  63   4                
+  64   4              }
+  65   3              else{
+  66   4                transmit_string("No such account, please enter valid details\r\n");
+  67   4                
+  68   4              }     
+  69   3      
+  70   3            }//Account display state ends here
+  71   2            
+  72   2            
+  73   2            else{//Withdraw cash
+  74   3                
+  75   3                unsigned char number_W = 0;
+  76   3              
+  77   3                transmit_string("Withdraw state, enter account number\r\n");
+  78   3              
+  79   3                number_W = receive_char();
+  80   3              
+  81   3              if(number_W == '1'){
+  82   4                
+  83   4                transmit_string("Account Holder: Sita\r\n");
+  84   4                transmit_string("Account Balance: ");
+  85   4                transmit_string(S_str);
+  86   4                transmit_string("\r\n");
+  87   4                
+  88   4                transmit_string("Enter Amount, in hundreds\r\n");
+  89   4              
+  90   4                amount1 = receive_char();
+  91   4                amount2 = receive_char();
+  92   4              
+  93   4                amount1 = amount1 - 0x30;
+  94   4                amount2 = amount2 - 0x30;
+  95   4              
+  96   4                msb = amount1;
+  97   4                lsb = amount2;
+  98   4              
+  99   4                msb = msb*1000;
+ 100   4                lsb = lsb*100;
+ 101   4              
+ 102   4                final_w_count = msb + lsb;
+ 103   4              
+ 104   4                notes_500 = final_w_count/500;
+ 105   4                notes_100 = (final_w_count%500)/100;
+ 106   4              
+ 107   4                balance_Sita = balance_Sita - final_w_count;
+ 108   4                int_to_string(balance_Sita, S_str);
+ 109   4              
+ 110   4                int_to_string_2(notes_500, n500_s);
+ 111   4                int_to_string_2(notes_100, n100_s);
+ 112   4              
+ 113   4                transmit_string("Remaining Balance: ");
+ 114   4                transmit_string(S_str);
+ 115   4                transmit_string("\r\n");
+ 116   4              
+C51 COMPILER V9.60.0.0   MAIN                                                              04/02/2022 16:46:20 PAGE 3   
+
+ 117   4              
+ 118   4                transmit_string("500 Notes: ");
+ 119   4                transmit_string(n500_s);
+ 120   4              
+ 121   4                transmit_string(", 100 Notes: ");
+ 122   4                transmit_string(n100_s);
+ 123   4                    
+ 124   4                transmit_string("\r\n");
+ 125   4                
+ 126   4                
+ 127   4              }
+ 128   3              else if(number_W == '2'){
+ 129   4                
+ 130   4                transmit_string("Account Holder: Gita\r\n");
+ 131   4                transmit_string("Account Balance: ");
+ 132   4                transmit_string(G_str);
+ 133   4                transmit_string("\r\n");
+ 134   4                
+ 135   4                transmit_string("Enter Amount, in hundreds\r\n");
+ 136   4              
+ 137   4              
+ 138   4                amount1 = receive_char();
+ 139   4                amount2 = receive_char();
+ 140   4              
+ 141   4                amount1 = amount1 - 0x30;
+ 142   4                amount2 = amount2 - 0x30;
+ 143   4              
+ 144   4                msb = amount1;
+ 145   4                lsb = amount2;
+ 146   4              
+ 147   4                msb = msb*1000;
+ 148   4                lsb = lsb*100;
+ 149   4              
+ 150   4                final_w_count = msb + lsb;
+ 151   4              
+ 152   4                notes_500 = final_w_count/500;
+ 153   4                notes_100 = (final_w_count%500)/100;
+ 154   4              
+ 155   4                balance_Gita = balance_Gita - final_w_count;
+ 156   4                int_to_string(balance_Gita, G_str);
+ 157   4              
+ 158   4                int_to_string_2(notes_500, n500_s);
+ 159   4                int_to_string_2(notes_100, n100_s);
+ 160   4              
+ 161   4                transmit_string("Remaining Balance: ");
+ 162   4                transmit_string(G_str);
+ 163   4                transmit_string("\r\n");
+ 164   4              
+ 165   4              
+ 166   4                transmit_string("500 Notes: ");
+ 167   4                transmit_string(n500_s);
+ 168   4              
+ 169   4                transmit_string(", 100 Notes: ");
+ 170   4                transmit_string(n100_s);
+ 171   4                    
+ 172   4                transmit_string("\r\n");
+ 173   4                
+ 174   4              }
+ 175   3              else{
+ 176   4                transmit_string("No such account, please enter valid details\r\n");
+ 177   4                
+ 178   4                continue;
+C51 COMPILER V9.60.0.0   MAIN                                                              04/02/2022 16:46:20 PAGE 4   
+
+ 179   4                
+ 180   4              }
+ 181   3              
+ 182   3                  
+ 183   3            }//Withdraw state ends here
+ 184   2              
+ 185   2              
+ 186   2            
+ 187   2          }//while loop ends here
+ 188   1          
+ 189   1      }//main function ends here
+ 190          
+ 191          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1078    ----
+   CONSTANT SIZE    =    320    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     23      31
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

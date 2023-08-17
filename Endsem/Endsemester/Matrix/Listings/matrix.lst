@@ -1,0 +1,80 @@
+A51 MACRO ASSEMBLER  MATRIX                                                               04/02/2022 14:31:57 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\matrix.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE matrix.a51 SET(SMALL) DEBUG PRINT(.\Listings\matrix.lst) OBJECT(.\Objec
+                      ts\matrix.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+0100                   4     MAIN:
+0100 3130              5     CALL MATRIX
+0102 80FE              6     HERE: SJMP HERE
+0130                   7     ORG 130H
+                       8     
+0130                   9     MATRIX:
+                      10     
+0130 E530             11     MOV A, 30H
+0132 8530F0           12     MOV B, 30H
+                      13     
+0135 A4               14     MUL AB  ;R5 HAS N^2
+0136 FD               15     MOV R5, A
+                      16     
+0137 7930             17     MOV R1, #30H ; R1 HAS 30H
+                      18     
+0139 850504           19     MOV 4H, 5H      ;R4 HAS COUNT OF LOOP
+013C 0C               20     INC R4
+                      21     
+013D                  22     LOOP:
+013D DC02             23     DJNZ R4, CONTINUE
+013F 80C1             24     SJMP HERE
+                      25     
+0141                  26     CONTINUE:
+0141 314D             27     ACALL UPDATE 
+0143 F8               28     MOV R0, A
+0144 E6               29     MOV A, @R0
+0145 27               30     ADD A, @R1
+0146 850700           31     MOV 0H, 7H
+0149 F6               32     MOV @R0, A
+014A 02013D           33     LJMP LOOP
+                      34     
+                      35     
+014D                  36     UPDATE:
+014D 09               37     INC R1
+014E E9               38     MOV A, R1
+014F 2D               39     ADD A, R5 ;A HAS ELEMENT OF OTHER MATRIX CORRESPONDING TO FIRST MATRIX'S ELEMENT
+0150 FE               40     MOV R6, A
+0151 2D               41     ADD A, R5
+0152 FF               42     MOV R7, A; R7 HAS THE LOCATION OF SUM FOR THAT PARTICULAR ENTRY
+0153 EE               43     MOV A, R6
+0154 22               44     RET
+                      45     
+0155 22               46     RET
+                      47     
+                      48     END
+                             
+A51 MACRO ASSEMBLER  MATRIX                                                               04/02/2022 14:31:57 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+CONTINUE . . . . .  C ADDR   0141H   A   
+HERE . . . . . . .  C ADDR   0102H   A   
+LOOP . . . . . . .  C ADDR   013DH   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+MATRIX . . . . . .  C ADDR   0130H   A   
+UPDATE . . . . . .  C ADDR   014DH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
