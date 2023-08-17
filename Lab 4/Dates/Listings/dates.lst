@@ -1,0 +1,142 @@
+A51 MACRO ASSEMBLER  DATES                                                                04/02/2022 12:01:22 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\dates.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE dates.a51 SET(SMALL) DEBUG PRINT(.\Listings\dates.lst) OBJECT(.\Objects
+                      \dates.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+0100                   4     MAIN:
+                       5     
+0100 3102              6     CALL DATE
+                       7     
+0102                   8     DATE:
+                       9     
+0102 755025           10     MOV 50H, #25H
+                      11     
+0105 755106           12     MOV 51H, #06H
+                      13     
+0108 755219           14     MOV 52H, #19H
+                      15     
+010B 755383           16     MOV 53H, #83H
+                      17     
+                      18     
+                      19     
+                      20     
+010E E550             21     MOV A, 50H
+0110 F590             22     MOV P1, A        
+                      23     
+0112 3152             24     CALL delay_200ms
+                      25     
+0114 C4               26     SWAP A
+0115 F590             27     MOV P1, A    
+                      28     
+0117 3152             29     CALL delay_200ms
+                      30     
+0119 740F             31     MOV A, #15
+011B C4               32     SWAP A
+011C F590             33     MOV P1,A         
+                      34     
+011E 3152             35     CALL delay_200ms
+                      36     
+0120 E551             37     MOV A, 51H
+0122 F590             38     MOV P1, A        
+                      39     
+0124 3152             40     CALL delay_200ms
+                      41     
+0126 C4               42     SWAP A
+0127 F590             43     MOV P1, A    
+                      44     
+0129 3152             45     CALL delay_200ms
+                      46     
+012B 740F             47     MOV A, #15
+012D C4               48     SWAP A
+012E F590             49     MOV P1,A         
+                      50     
+0130 3152             51     CALL delay_200ms
+                      52     
+0132 E552             53     MOV A, 52H
+0134 F590             54     MOV P1, A        
+                      55     
+0136 3152             56     CALL delay_200ms
+                      57     
+A51 MACRO ASSEMBLER  DATES                                                                04/02/2022 12:01:22 PAGE     2
+
+0138 C4               58     SWAP A
+0139 F590             59     MOV P1, A    
+                      60     
+013B 3152             61     CALL delay_200ms
+                      62     
+013D E553             63     MOV A, 53H
+013F F590             64     MOV P1, A        
+                      65     
+0141 3152             66     CALL delay_200ms
+                      67     
+0143 C4               68     SWAP A
+0144 F590             69     MOV P1, A    
+                      70     
+0146 3152             71     CALL delay_200ms
+                      72     
+0148 740F             73     MOV A, #15
+014A C4               74     SWAP A
+014B F590             75     MOV P1,A         
+                      76     
+014D 3152             77     CALL delay_200ms
+                      78     
+014F 020102           79     LJMP DATE
+                      80     
+                      81     
+                      82     
+0152                  83     delay_200ms:
+0152 C000             84     push 00h
+0154 7864             85     mov r0, #100
+0156 315D             86     h3: acall delay_1ms
+0158 D8FC             87     djnz r0, h3
+015A D000             88     pop 00h
+015C 22               89     ret
+                      90     
+015D                  91     delay_1ms:
+015D C000             92     push 00h
+015F 7828             93     mov r0, #40
+0161 3168             94     h2: acall delay_250us
+0163 D8FC             95     djnz r0, h2
+0165 D000             96     pop 00h
+0167 22               97     ret
+                      98     
+0168                  99     delay_250us:
+0168 C000            100     push 00h
+016A 78F4            101     mov r0, #244
+016C D8FE            102     h1: djnz r0, h1
+016E D000            103     pop 00h
+0170 22              104     ret
+                     105     
+0171 22              106     RET
+                     107     END
+A51 MACRO ASSEMBLER  DATES                                                                04/02/2022 12:01:22 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DATE . . . . . . .  C ADDR   0102H   A   
+DELAY_1MS. . . . .  C ADDR   015DH   A   
+DELAY_200MS. . . .  C ADDR   0152H   A   
+DELAY_250US. . . .  C ADDR   0168H   A   
+H1 . . . . . . . .  C ADDR   016CH   A   
+H2 . . . . . . . .  C ADDR   0161H   A   
+H3 . . . . . . . .  C ADDR   0156H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

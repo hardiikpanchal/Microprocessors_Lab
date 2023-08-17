@@ -1,0 +1,39 @@
+A51 MACRO ASSEMBLER  PORTSQ                                                               01/22/2022 12:09:49 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\PORTSQ.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE PORTSQ.ASM SET(SMALL) DEBUG PRINT(.\Listings\PORTSQ.lst) OBJECT(.\Objec
+                      ts\PORTSQ.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000 74A7              1     MOV A, #0A7H
+0002 78F0              2     MOV R0,#0F0H
+0004 8500F0            3     MOV B,00H
+0007 25F0              4     ADD A,B
+0009 F8                5     MOV R0,A
+000A 5006              6     JNC cy_check
+000C 25F0              7     ADD A,B
+000E F5F0              8     MOV 0F0H,A
+0010 8002              9     JMP stop
+0012 86F0             10     cy_check:MOV 0F0H,@R0
+0014 80FE             11     stop:JMP stop
+*** WARNING #A41 IN 11 (PORTSQ.ASM, LINE 11): MISSING 'END' STATEMENT
+A51 MACRO ASSEMBLER  PORTSQ                                                               01/22/2022 12:09:49 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+CY_CHECK . . . . .  C ADDR   0012H   A   
+STOP . . . . . . .  C ADDR   0014H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  1 WARNING(S), 0 ERROR(S)

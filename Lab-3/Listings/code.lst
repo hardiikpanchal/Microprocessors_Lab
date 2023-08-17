@@ -1,0 +1,151 @@
+A51 MACRO ASSEMBLER  CODE                                                                 04/02/2022 11:09:19 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\code.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE code.a51 SET(SMALL) DEBUG PRINT(.\Listings\code.lst) OBJECT(.\Objects\c
+                      ode.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+0100                   4     MAIN:
+0100 3130              5     CALL SEARCH
+0102 80FE              6     HERE: SJMP HERE
+0130                   7     ORG 130H
+0130                   8     SEARCH:
+                       9     
+                      10     
+0130 AB30             11             MOV R3, 30H
+0132 AA31             12             MOV R2, 31H
+                      13             
+                      14     
+                      15     
+                      16     
+                      17     
+                      18                     
+0134 8000             19             LOOP: SJMP BASE0
+                      20                     
+0136 C3               21             BASE0:  CLR C
+0137 EA               22                             MOV A, R2
+0138 B40005           23                             CJNE A, #00H, BASE1
+013B 75330E           24                             MOV 33H, #0EH
+013E 8042             25                             SJMP STOP
+                      26     
+                      27     
+                      28                             
+0140 C3               29             BASE1:  CLR C
+0141 EA               30                             MOV A, R2
+0142 B4010F           31                             CJNE A, #01H, SEARCH1
+                      32     
+                      33     
+                      34     
+                      35     
+0145 EB               36                             MOV A, R3
+0146 F9               37                             MOV R1, A
+                      38                     
+0147 E7               39                             MOV A, @R1
+0148 B53204           40                             CJNE A, 32H, NOTFOUND  
+014B 8933             41                             MOV 33H, R1
+014D 8033             42                             SJMP STOP
+                      43     
+014F 75330E           44             NOTFOUND: MOV 33H, #0EH
+0152 802E             45                               SJMP STOP
+                      46     
+                      47     
+                      48     
+0154 EA               49             SEARCH1:MOV A, R2
+0155 75F002           50                             MOV B, #2
+0158 84               51                             DIV AB
+                      52                             
+                      53                             
+                      54                             
+                      55                             
+                      56                             
+                      57                             
+A51 MACRO ASSEMBLER  CODE                                                                 04/02/2022 11:09:19 PAGE     2
+
+                      58                             
+0159 2B               59                             ADD A, R3
+015A FD               60                             MOV R5, A                       
+                      61                             
+                      62                             
+015B ED               63                             MOV A, R5
+015C F9               64                             MOV R1, A
+015D E7               65                             MOV A, @R1
+015E B53204           66                             CJNE A, 32H, SEARCH2
+                      67                             
+0161 8933             68                             MOV 33H, R1  
+0163 801D             69                             SJMP STOP
+                      70     
+                      71     
+                      72                             
+0165 ED               73             SEARCH2:MOV A, R5
+0166 F9               74                             MOV R1, A
+0167 C3               75                             CLR C
+0168 E532             76                             MOV A, 32H
+016A 97               77                             SUBB A, @R1
+016B 4006             78                             JC SEARCH3
+                      79                             
+016D ED               80                             MOV A, R5
+                      81                             
+                      82                             
+                      83                             
+016E FB               84                             MOV R3, A
+                      85                             
+016F 3177             86                             CALL DIVN
+                      87                             
+0171 80C1             88                             SJMP LOOP                
+                      89                     
+                      90                             
+                      91     
+                      92                             
+0173 3177             93             SEARCH3:CALL DIVN 
+                      94                             
+0175 80BD             95                             SJMP LOOP                
+                      96                               
+                      97     
+                      98     
+0177                  99     DIVN:
+0177 EA              100                             MOV A, R2
+0178 75F002          101                             MOV B, #2                
+017B 84              102                             DIV AB
+017C FF              103                             MOV R7, A
+017D EA              104                             MOV A, R2
+017E C3              105                             CLR C
+017F 9F              106                             SUBB A, R7
+0180 FA              107                             MOV R2, A
+0181 22              108                             RET
+                     109             
+0182 80FE            110             STOP:SJMP STOP
+0184 22              111     RET
+                     112     END
+A51 MACRO ASSEMBLER  CODE                                                                 04/02/2022 11:09:19 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+BASE0. . . . . . .  C ADDR   0136H   A   
+BASE1. . . . . . .  C ADDR   0140H   A   
+DIVN . . . . . . .  C ADDR   0177H   A   
+HERE . . . . . . .  C ADDR   0102H   A   
+LOOP . . . . . . .  C ADDR   0134H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+NOTFOUND . . . . .  C ADDR   014FH   A   
+SEARCH . . . . . .  C ADDR   0130H   A   
+SEARCH1. . . . . .  C ADDR   0154H   A   
+SEARCH2. . . . . .  C ADDR   0165H   A   
+SEARCH3. . . . . .  C ADDR   0173H   A   
+STOP . . . . . . .  C ADDR   0182H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

@@ -1,0 +1,3 @@
+".\Objects\Q2.obj" 
+TO ".\Objects\MAC" 
+PRINT(".\Listings\MAC.m51") RAMSIZE(256) 

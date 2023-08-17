@@ -1,0 +1,459 @@
+A51 MACRO ASSEMBLER  MUSIC                                                                03/12/2022 19:36:21 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\music.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE music.a51 SET(SMALL) DEBUG PRINT(.\Listings\music.lst) OBJECT(.\Objects
+                      \music.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; This subroutine writes characters on the LCD
+  00A0                 2     LCD_data equ P2    ;LCD Data port
+  0080                 3     LCD_rs   equ P0.0  ;LCD Register Select
+  0081                 4     LCD_rw   equ P0.1  ;LCD Read/Write
+  0082                 5     LCD_en   equ P0.2  ;LCD Enable
+                       6             
+0000                   7     ORG 0H
+0000 020030            8     LJMP MAIN
+0030                   9     ORG 30H
+0030                  10     MAIN:
+0030 1160             11     CALL music
+0032 80FE             12     here: sjmp here
+                      13     
+                      14     ;-------------------------------------
+001B                  15     ORG 001BH
+                      16             
+001B 020400           17     LJMP 400H
+                      18     
+                      19     ;-------------------------
+0060                  20     ORG 60H
+                      21             
+0060                  22     MUSIC:
+                      23     
+0060 758911           24             MOV TMOD, #11H
+0063 75A888           25             MOV IE, #88H            ;ENABLING INTERRUPTS FROM TIMER1
+0066 758D3C           26             MOV TH1, #3CH           ; Load THL for 25 miliseconds
+0069 758BAF           27             MOV TL1, #0AFH
+006C D28E             28             SETB TR1                        ;STARTING TIMER1
+006E E4               29             CLR A
+006F FD               30             MOV R5, A                       ;STORING 0 TO R5 AT START
+0070 FE               31             MOV R6, A                       ;STORING 0 TO R6 AT START
+                      32             
+0071 3137             33             ACALL DISPLAY
+                      34             
+0073 8000             35             SJMP DECIDE
+                      36             
+0075 C3               37             DECIDE: CLR C
+0076 7400             38                             MOV A, #00H
+0078 9E               39                             SUBB A, R6
+0079 602C             40                             JZ NOTE1
+                      41                      
+007B C3               42                             CLR C
+007C 7401             43                             MOV A, #01H
+007E 9E               44                             SUBB A, R6
+007F 602C             45                             JZ NOTE2
+                      46                             
+0081 C3               47                             CLR C
+0082 7402             48                             MOV A, #02H
+0084 9E               49                             SUBB A, R6
+0085 602C             50                             JZ NOTE3
+                      51                             
+0087 C3               52                             CLR C
+0088 7403             53                             MOV A, #03H
+008A 9E               54                             SUBB A, R6
+008B 602C             55                             JZ NOTE4
+                      56                             
+008D C3               57                             CLR C
+A51 MACRO ASSEMBLER  MUSIC                                                                03/12/2022 19:36:21 PAGE     2
+
+008E 7404             58                             MOV A, #04H
+0090 9E               59                             SUBB A, R6
+0091 602C             60                             JZ NOTE5
+                      61                             
+0093 C3               62                             CLR C
+0094 7405             63                             MOV A, #05H
+0096 9E               64                             SUBB A, R6
+0097 602C             65                             JZ NOTE6
+                      66                             
+0099 C3               67                             CLR C
+009A 7406             68                             MOV A, #06H
+009C 9E               69                             SUBB A, R6
+009D 602A             70                             JZ NOTE7
+                      71                             
+009F C3               72                             CLR C
+00A0 7407             73                             MOV A, #07H
+00A2 9E               74                             SUBB A, R6
+00A3 602A             75                             JZ NOTE8
+                      76                             
+00A5 80B9             77                             SJMP MUSIC
+                      78             
+                      79     ;-----------------------------------------
+                      80     
+00A7 11D5             81             NOTE1: ACALL N1
+00A9 B287             82                        CPL P0.7
+00AB 80C8             83                        SJMP DECIDE
+                      84                        
+00AD 11E5             85             NOTE2: ACALL N2
+00AF B287             86                        CPL P0.7
+00B1 80C2             87                        SJMP DECIDE
+                      88     
+00B3 11F5             89             NOTE3: ACALL N3
+00B5 B287             90                        CPL P0.7
+00B7 80BC             91                        SJMP DECIDE
+                      92                       
+00B9 11E5             93             NOTE4: ACALL N2
+00BB B287             94                        CPL P0.7
+00BD 80B6             95                        SJMP DECIDE
+                      96                        
+00BF 3105             97             NOTE5: ACALL N4
+00C1 B287             98                        CPL P0.7
+00C3 80B0             99                        SJMP DECIDE
+                     100                        
+00C5 3125            101             NOTE6: ACALL SILENCE
+00C7 80AC            102                        SJMP DECIDE  
+                     103     
+00C9 3105            104             NOTE7: ACALL N4
+00CB B287            105                        CPL P0.7
+00CD 80A6            106                        SJMP DECIDE
+                     107                        
+00CF 3115            108             NOTE8: ACALL N5
+00D1 B287            109                        CPL P0.7
+00D3 80A0            110                        SJMP DECIDE
+                     111                        
+                     112     ;-----------------------------
+00D5                 113             N1:
+00D5 758CEE          114             MOV TH0, #0EEH
+00D8 758A3E          115             MOV TL0, #3EH
+00DB D28C            116             SETB TR0
+                     117             
+00DD 308DFD          118             REPEAT1: JNB TF0, REPEAT1
+00E0 C28C            119                              CLR TR0
+00E2 C28D            120                              CLR TF0
+00E4 22              121                              RET
+                     122     ;----------------------------------
+00E5                 123             N2:
+A51 MACRO ASSEMBLER  MUSIC                                                                03/12/2022 19:36:21 PAGE     3
+
+00E5 758CF0          124             MOV TH0, #0F0H
+00E8 758A2F          125             MOV TL0, #2FH
+00EB D28C            126             SETB TR0
+                     127             
+00ED 308DFD          128             REPEAT2: JNB TF0, REPEAT2
+00F0 C28C            129                              CLR TR0
+00F2 C28D            130                              CLR TF0
+00F4 22              131                              RET
+                     132     ;---------------------------------
+00F5                 133             N3:
+00F5 758CF2          134             MOV TH0, #0F2H
+00F8 758ABF          135             MOV TL0, #0BFH
+00FB D28C            136             SETB TR0
+                     137             
+00FD 308DFD          138             REPEAT3: JNB TF0, REPEAT3
+0100 C28C            139                              CLR TR0
+0102 C28D            140                              CLR TF0
+0104 22              141                              RET
+                     142     ;---------------------------------
+0105                 143             N4:
+0105 758CF5          144             MOV TH0, #0F5H
+0108 758A70          145             MOV TL0, #70H
+010B D28C            146             SETB TR0
+                     147             
+010D 308DFD          148             REPEAT4: JNB TF0, REPEAT4
+0110 C28C            149                              CLR TR0
+0112 C28D            150                              CLR TF0
+0114 22              151                              RET
+                     152     ;----------------------------------
+0115                 153             N5:
+0115 758CF4          154             MOV TH0, #0F4H
+0118 758A29          155             MOV TL0, #29H
+011B D28C            156             SETB TR0
+                     157             
+011D 308DFD          158             REPEAT5: JNB TF0, REPEAT5
+0120 C28C            159                              CLR TR0
+0122 C28D            160                              CLR TF0
+0124 22              161                              RET
+                     162     ;----------------------------------
+0125                 163             SILENCE:
+0125 C287            164             CLR P0.7
+                     165             
+0127 758CEE          166             MOV TH0, #0EEH
+012A 758A3E          167             MOV TL0, #3EH
+012D D28C            168             SETB TR0
+                     169             
+012F 308DFD          170             REPEATS: JNB TF0, REPEATS
+0132 C28C            171                              CLR TR0
+0134 C28D            172                              CLR TF0
+0136 22              173                              RET
+                     174     ;----------------------------------     
+                     175             
+0137                 176             display:
+0137 75A000          177             mov P2,#00h
+013A 759000          178         mov P1,#00h
+                     179             ;initial delay for lcd power up
+                     180     
+                     181             ;here1:setb p1.0
+013D 31C2            182         acall delay
+                     183             ;clr p1.0
+013F 31C2            184             acall delay
+                     185             ;sjmp here1
+0141 3157            186               acall lcd_init      ;initialise LCD
+                     187             
+0143 31C2            188               acall delay
+0145 31C2            189               acall delay
+A51 MACRO ASSEMBLER  MUSIC                                                                03/12/2022 19:36:21 PAGE     4
+
+0147 31C2            190               acall delay
+0149 7482            191               mov a,#82h             ;Put cursor on first row,5 column
+014B 3194            192               acall lcd_command      ;send command to LCD
+014D 31C2            193               acall delay
+014F 900300          194               mov   dptr,#my_string1   ;Load DPTR with sring1 Addr
+0152 31B4            195               acall lcd_sendstring     ;call text strings sending routine
+0154 31C2            196               acall delay
+0156 22              197               ret
+                     198     ;------------------------LCD Initialisation routine----------------------------------------
+                             ------------
+0157                 199     lcd_init:
+0157 75A038          200              mov   LCD_data,#38H  ;Function set: 2 Line, 8-bit, 5x7 dots
+015A C280            201              clr   LCD_rs         ;Selected command register
+015C C281            202              clr   LCD_rw         ;We are writing in instruction register
+015E D282            203              setb  LCD_en         ;Enable H->L
+0160 31C2            204                      acall delay
+0162 C282            205              clr   LCD_en
+0164 31C2            206                  acall delay
+                     207     
+0166 75A00C          208              mov   LCD_data,#0CH  ;Display on, Curson off
+0169 C280            209              clr   LCD_rs         ;Selected instruction register
+016B C281            210              clr   LCD_rw         ;We are writing in instruction register
+016D D282            211              setb  LCD_en         ;Enable H->L
+016F 31C2            212                      acall delay
+0171 C282            213              clr   LCD_en
+                     214              
+0173 31C2            215                      acall delay
+0175 75A001          216              mov   LCD_data,#01H  ;Clear LCD
+0178 C280            217              clr   LCD_rs         ;Selected command register
+017A C281            218              clr   LCD_rw         ;We are writing in instruction register
+017C D282            219              setb  LCD_en         ;Enable H->L
+017E 31C2            220                      acall delay
+0180 C282            221              clr   LCD_en
+                     222              
+0182 31C2            223                      acall delay
+                     224     
+0184 75A006          225              mov   LCD_data,#06H  ;Entry mode, auto increment with no shift
+0187 C280            226              clr   LCD_rs         ;Selected command register
+0189 C281            227              clr   LCD_rw         ;We are writing in instruction register
+018B D282            228              setb  LCD_en         ;Enable H->L
+018D 31C2            229                      acall delay
+018F C282            230              clr   LCD_en
+                     231     
+0191 31C2            232                      acall delay
+                     233              
+0193 22              234              ret                  ;Return from routine
+                     235     
+                     236     ;-----------------------command sending routine-------------------------------------
+0194                 237      lcd_command:
+0194 F5A0            238              mov   LCD_data,A     ;Move the command to LCD port
+0196 C280            239              clr   LCD_rs         ;Selected command register
+0198 C281            240              clr   LCD_rw         ;We are writing in instruction register
+019A D282            241              setb  LCD_en         ;Enable H->L
+019C 31C2            242                      acall delay
+019E C282            243              clr   LCD_en
+01A0 31C2            244                      acall delay
+                     245         
+01A2 22              246              ret  
+                     247     ;-----------------------data sending routine-------------------------------------          
+                                       
+01A3                 248      lcd_senddata:
+01A3 F5A0            249              mov   LCD_data,A     ;Move the command to LCD port
+01A5 D280            250              setb  LCD_rs         ;Selected data register
+01A7 C281            251              clr   LCD_rw         ;We are writing
+01A9 D282            252              setb  LCD_en         ;Enable H->L
+01AB 31C2            253                      acall delay
+A51 MACRO ASSEMBLER  MUSIC                                                                03/12/2022 19:36:21 PAGE     5
+
+01AD C282            254              clr   LCD_en
+01AF 31C2            255              acall delay
+01B1 31C2            256                      acall delay
+01B3 22              257              ret                  ;Return from busy routine
+                     258     
+                     259     ;-----------------------text strings sending routine-------------------------------------
+01B4                 260     lcd_sendstring:
+01B4 C0E0            261             push 0e0h
+01B6                 262             lcd_sendstring_loop:
+01B6 E4              263                      clr   a                 ;clear Accumulator for any previous data
+01B7 93              264                      movc  a,@a+dptr         ;load the first character in accumulator
+01B8 6005            265                      jz    exit              ;go to exit if zero
+01BA 31A3            266                      acall lcd_senddata      ;send first char
+01BC A3              267                      inc   dptr              ;increment data pointer
+01BD 80F7            268                      sjmp  LCD_sendstring_loop    ;jump back to send the next character
+01BF D0E0            269     exit:    pop 0e0h
+01C1 22              270              ret                     ;End of routine
+                     271     
+                     272     ;----------------------delay routine-----------------------------------------------------
+01C2 C000            273     delay:   push 0
+01C4 C001            274              push 1
+01C6 7801            275              mov r0,#1
+01C8 79FF            276     loop2:   mov r1,#255
+01CA D9FE            277              loop1:  djnz r1, loop1
+01CC D8FA            278              djnz r0, loop2
+01CE D001            279              pop 1
+01D0 D000            280              pop 0 
+01D2 22              281              ret
+                     282     
+                     283     ;------------- ROM text strings------------------------------------------------------------
+                             ---
+0300                 284     org 300h
+0300                 285     my_string1:
+0300 524F4C4C        286              DB   "ROLLING TIME", 00H                        
+0304 494E4720                
+0308 54494D45                
+030C 00                      
+                     287     ;-------------------------------------
+0400                 288     ORG 400H
+                     289             
+0400 C3              290                             CLR C
+0401 7400            291                             MOV A, #00H
+0403 9E              292                             SUBB A, R6
+0404 602A            293                             JZ ONETOFOUR1
+                     294                      
+0406 C3              295                             CLR C
+0407 7401            296                             MOV A, #01H
+0409 9E              297                             SUBB A, R6
+040A 6024            298                             JZ ONETOFOUR1
+                     299                             
+040C C3              300                             CLR C
+040D 7402            301                             MOV A, #02H
+040F 9E              302                             SUBB A, R6
+0410 601E            303                             JZ ONETOFOUR1
+                     304                             
+0412 C3              305                             CLR C
+0413 7403            306                             MOV A, #03H
+0415 9E              307                             SUBB A, R6
+0416 6018            308                             JZ ONETOFOUR1
+                     309                             
+0418 C3              310                             CLR C
+0419 7404            311                             MOV A, #04H
+041B 9E              312                             SUBB A, R6
+041C 601A            313                             JZ FIVESEVENEIGHT
+                     314                             
+041E C3              315                             CLR C
+A51 MACRO ASSEMBLER  MUSIC                                                                03/12/2022 19:36:21 PAGE     6
+
+041F 7405            316                             MOV A, #05H
+0421 9E              317                             SUBB A, R6
+0422 601C            318                             JZ SIX
+                     319                             
+0424 C3              320                             CLR C
+0425 7406            321                             MOV A, #06H
+0427 9E              322                             SUBB A, R6
+0428 600E            323                             JZ FIVESEVENEIGHT
+                     324                             
+042A C3              325                             CLR C
+042B 7407            326                             MOV A, #07H
+042D 9E              327                             SUBB A, R6
+042E 6008            328                             JZ FIVESEVENEIGHT
+                     329                     
+0430                 330     ONETOFOUR1:
+0430 0D              331     INC R5
+0431 BD1E16          332     CJNE R5, #1EH, ONETOFOUR2
+0434 E4              333     CLR A
+0435 FD              334     MOV R5, A
+0436 8010            335     SJMP INCR
+                     336     
+0438                 337     FIVESEVENEIGHT:
+0438 0D              338     INC R5
+0439 BD280E          339     CJNE R5, #28H, ONETOFOUR2
+043C E4              340     CLR A
+043D FD              341     MOV R5, A
+043E 8008            342     SJMP INCR
+                     343     
+0440                 344     SIX:
+0440 0D              345     INC R5
+0441 BD1406          346     CJNE R5, #14H, ONETOFOUR2
+0444 E4              347     CLR A
+0445 FD              348     MOV R5, A
+0446 8000            349     SJMP INCR
+                     350     
+0448                 351     INCR:
+0448 0E              352     INC R6
+0449 32              353     RETI 
+                     354     
+044A                 355     ONETOFOUR2:
+044A 758D3C          356             MOV TH1, #3CH                                           ; Load THL for 25 milisecon
+                             ds
+044D 758BAF          357             MOV TL1, #0AFH
+0450 D28E            358             SETB TR1
+0452 32              359             RETI
+                     360             
+                     361     ;--------------------------------
+                     362     end
+A51 MACRO ASSEMBLER  MUSIC                                                                03/12/2022 19:36:21 PAGE     7
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E              T Y P E  V A L U E   ATTRIBUTES
+
+DECIDE. . . . . . .  C ADDR   0075H   A   
+DELAY . . . . . . .  C ADDR   01C2H   A   
+DISPLAY . . . . . .  C ADDR   0137H   A   
+EXIT. . . . . . . .  C ADDR   01BFH   A   
+FIVESEVENEIGHT. . .  C ADDR   0438H   A   
+HERE. . . . . . . .  C ADDR   0032H   A   
+IE. . . . . . . . .  D ADDR   00A8H   A   
+INCR. . . . . . . .  C ADDR   0448H   A   
+LCD_COMMAND . . . .  C ADDR   0194H   A   
+LCD_DATA. . . . . .  D ADDR   00A0H   A   
+LCD_EN. . . . . . .  B ADDR   0080H.2 A   
+LCD_INIT. . . . . .  C ADDR   0157H   A   
+LCD_RS. . . . . . .  B ADDR   0080H.0 A   
+LCD_RW. . . . . . .  B ADDR   0080H.1 A   
+LCD_SENDDATA. . . .  C ADDR   01A3H   A   
+LCD_SENDSTRING. . .  C ADDR   01B4H   A   
+LCD_SENDSTRING_LOOP  C ADDR   01B6H   A   
+LOOP1 . . . . . . .  C ADDR   01CAH   A   
+LOOP2 . . . . . . .  C ADDR   01C8H   A   
+MAIN. . . . . . . .  C ADDR   0030H   A   
+MUSIC . . . . . . .  C ADDR   0060H   A   
+MY_STRING1. . . . .  C ADDR   0300H   A   
+N1. . . . . . . . .  C ADDR   00D5H   A   
+N2. . . . . . . . .  C ADDR   00E5H   A   
+N3. . . . . . . . .  C ADDR   00F5H   A   
+N4. . . . . . . . .  C ADDR   0105H   A   
+N5. . . . . . . . .  C ADDR   0115H   A   
+NOTE1 . . . . . . .  C ADDR   00A7H   A   
+NOTE2 . . . . . . .  C ADDR   00ADH   A   
+NOTE3 . . . . . . .  C ADDR   00B3H   A   
+NOTE4 . . . . . . .  C ADDR   00B9H   A   
+NOTE5 . . . . . . .  C ADDR   00BFH   A   
+NOTE6 . . . . . . .  C ADDR   00C5H   A   
+NOTE7 . . . . . . .  C ADDR   00C9H   A   
+NOTE8 . . . . . . .  C ADDR   00CFH   A   
+ONETOFOUR1. . . . .  C ADDR   0430H   A   
+ONETOFOUR2. . . . .  C ADDR   044AH   A   
+P0. . . . . . . . .  D ADDR   0080H   A   
+P1. . . . . . . . .  D ADDR   0090H   A   
+P2. . . . . . . . .  D ADDR   00A0H   A   
+REPEAT1 . . . . . .  C ADDR   00DDH   A   
+REPEAT2 . . . . . .  C ADDR   00EDH   A   
+REPEAT3 . . . . . .  C ADDR   00FDH   A   
+REPEAT4 . . . . . .  C ADDR   010DH   A   
+REPEAT5 . . . . . .  C ADDR   011DH   A   
+REPEATS . . . . . .  C ADDR   012FH   A   
+SILENCE . . . . . .  C ADDR   0125H   A   
+SIX . . . . . . . .  C ADDR   0440H   A   
+TF0 . . . . . . . .  B ADDR   0088H.5 A   
+TH0 . . . . . . . .  D ADDR   008CH   A   
+TH1 . . . . . . . .  D ADDR   008DH   A   
+TL0 . . . . . . . .  D ADDR   008AH   A   
+TL1 . . . . . . . .  D ADDR   008BH   A   
+TMOD. . . . . . . .  D ADDR   0089H   A   
+TR0 . . . . . . . .  B ADDR   0088H.4 A   
+TR1 . . . . . . . .  B ADDR   0088H.6 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

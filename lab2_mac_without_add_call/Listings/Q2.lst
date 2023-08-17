@@ -1,0 +1,114 @@
+A51 MACRO ASSEMBLER  Q2                                                                   01/23/2022 16:26:42 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\Q2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Q2.asm SET(SMALL) DEBUG PRINT(.\Listings\Q2.lst) OBJECT(.\Objects\Q2.ob
+                      j) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     
+0000                   2     ORG 0H
+0000 020100            3     LJMP MAIN
+0100                   4     ORG 100H
+0100                   5     MAIN:
+0100 3130              6     CALL MAC
+0102 80FE              7     HERE: SJMP HERE
+0130                   8     ORG 130H
+                       9     
+0130                  10     MAC:
+                      11     
+0130 E570             12     MOV A, 70h
+0132 8573F0           13     MOV B, 73h
+                      14     
+0135 A4               15     MUL AB
+                      16     
+0136 F8               17     MOV R0, A
+0137 A9F0             18     MOV R1, B
+                      19     
+                      20     
+                      21     
+0139 E571             22     MOV A, 71h
+013B 8574F0           23     MOV B, 74h
+                      24     
+013E A4               25     MUL AB
+                      26     
+013F FA               27     MOV R2, A
+0140 ABF0             28     MOV R3, B
+                      29     
+                      30     
+                      31     
+0142 E572             32     MOV A, 72h
+0144 8575F0           33     MOV B, 75h
+                      34     
+0147 A4               35     MUL AB
+                      36     
+0148 FC               37     MOV R4, A
+0149 ADF0             38     MOV R5, B
+                      39     
+                      40     
+                      41     
+014B E4               42     CLR A
+014C FE               43     MOV R6, A
+014D C3               44     CLR C
+                      45     
+014E E8               46     MOV A, R0  
+014F 2A               47     ADD A, R2  
+0150 F8               48     MOV R0 ,A  
+                      49     
+0151 E9               50     MOV A, R1  
+0152 3B               51     ADDC A, R3 
+                      52     
+0153 5001             53     JNC SKIP1
+0155 0E               54     INC R6
+0156 F9               55     SKIP1: MOV R1, A
+0157 8E52             56                MOV 52h, R6
+                      57               
+A51 MACRO ASSEMBLER  Q2                                                                   01/23/2022 16:26:42 PAGE     2
+
+                      58     
+                      59     
+0159 E4               60     CLR A
+015A FF               61     MOV R7, A
+015B C3               62     CLR C
+                      63     
+015C E8               64     MOV A, R0  
+015D 2C               65     ADD A, R4  
+015E F552             66     MOV 52h ,A  
+                      67     
+0160 E9               68     MOV A, R1  
+0161 3D               69     ADDC A, R5 
+                      70     
+0162 5001             71     JNC SKIP2
+0164 0F               72     INC R7
+0165 F551             73     SKIP2: MOV 51h, A
+0167 E4               74                CLR A
+0168 EF               75                MOV A, R7
+0169 2E               76                ADD A, R6
+016A F550             77                MOV 50h, A
+                      78               
+                      79     
+016C 22               80     RET
+                      81     
+                      82     END
+A51 MACRO ASSEMBLER  Q2                                                                   01/23/2022 16:26:42 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+HERE . . . . . . .  C ADDR   0102H   A   
+MAC. . . . . . . .  C ADDR   0130H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+SKIP1. . . . . . .  C ADDR   0156H   A   
+SKIP2. . . . . . .  C ADDR   0165H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

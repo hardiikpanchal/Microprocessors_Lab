@@ -1,0 +1,89 @@
+A51 MACRO ASSEMBLER  LED                                                                  03/07/2022 15:19:21 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\led.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE led.a51 SET(SMALL) DEBUG PRINT(.\Listings\led.lst) OBJECT(.\Objects\led
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+0100                   4     MAIN:
+0100 3130              5     CALL LED
+0102 80FE              6     HERE: SJMP HERE
+0130                   7     ORG 130H
+                       8     
+                       9     
+0130 753003           10     LED: mov 30h, #03h
+0133 7590F0           11              mov p1, #0f0h
+0136 120141           12              lcall delay_1s
+0139 759000           13              mov p1, #00h
+013C 120141           14              lcall delay_1s
+                      15              
+013F 80EF             16              sjmp LED
+                      17     
+                      18     ;-----------------------------
+0141                  19     delay_1s:
+0141 E530             20             mov a, 30h
+0143 75F032           21             mov b, #32h
+0146 A4               22             mul ab
+0147 FA               23             mov r2, a
+                      24             
+0148 314D             25             h1: acall delay
+                      26             
+014A DAFC             27             djnz r2, h1
+014C 22               28             ret
+                      29             
+                      30     ;------------------------------
+                      31     
+014D                  32     delay:
+                      33     
+014D 758901           34     MOV TMOD, #01H
+0150 758C63           35     MOV TH0, #063H
+0153 758AC0           36     MOV TL0, #0C0H
+0156 D28C             37     SETB TR0
+                      38     
+0158 308DFD           39     LOOP: JNB TF0,LOOP  
+015B C28C             40           CLR TR0  
+015D C28D             41           CLR TF0  
+015F 22               42               RET
+                      43               
+                      44     
+                      45     
+                      46     ;---------------------------------
+                      47     
+                      48     
+0160 22               49     RET
+                      50     
+                      51     END
+A51 MACRO ASSEMBLER  LED                                                                  03/07/2022 15:19:21 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+DELAY. . . . . . .  C ADDR   014DH   A   
+DELAY_1S . . . . .  C ADDR   0141H   A   
+H1 . . . . . . . .  C ADDR   0148H   A   
+HERE . . . . . . .  C ADDR   0102H   A   
+LED. . . . . . . .  C ADDR   0130H   A   
+LOOP . . . . . . .  C ADDR   0158H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

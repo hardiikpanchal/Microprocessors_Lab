@@ -1,0 +1,104 @@
+A51 MACRO ASSEMBLER  ASCII                                                                02/13/2022 11:02:33 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\ascii.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE ascii.a51 SET(SMALL) DEBUG PRINT(.\Listings\ascii.lst) OBJECT(.\Objects
+                      \ascii.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 020100            2     LJMP MAIN
+0100                   3     ORG 100H
+0100                   4     MAIN:
+0100 3130              5     CALL ASCII
+0102 22                6     ret
+                       7     
+0103 80FE              8     HERE: SJMP HERE
+0130                   9     ORG 130H
+                      10     
+0130                  11     ASCII:
+                      12     
+                      13     
+0130 E530             14     MOV A, 30H
+0132 540F             15     ANL A, #0FH
+0134 F9               16     MOV R1, A
+                      17     
+0135 E530             18     MOV A, 30H
+0137 54F0             19     ANL A, #0F0H
+0139 FA               20     MOV R2, A
+                      21     
+013A 8001             22     SJMP RIGHT
+013C 22               23     ret
+                      24     
+                      25     
+                      26     
+013D                  27     RIGHT:
+013D C3               28     CLR C
+013E E9               29     MOV A, R1
+013F 940A             30     SUBB A, #0AH
+0141 5015             31     JNC LETTER1
+                      32     
+0143 E9               33     MOV A, R1
+0144 2430             34     ADD A, #30H
+0146 F561             35     MOV 61H, A
+0148 8001             36     SJMP LEFT
+014A 22               37     ret      
+                      38     
+                      39     
+                      40     
+014B                  41     LEFT:
+014B C3               42     CLR C
+014C EA               43     MOV A, R2
+014D 94A0             44     SUBB A, #0A0H
+014F 500F             45     JNC LETTER2
+                      46     
+0151 EA               47     MOV A, R2
+0152 C4               48     SWAP A
+0153 2430             49     ADD A, #30H
+0155 F560             50     MOV 60H, A
+0157 22               51     ret
+                      52     
+                      53     
+                      54     
+0158 E9               55     LETTER1: MOV A, R1
+0159 2437             56                      ADD A, #37H
+015B F561             57                      MOV 61H, A
+A51 MACRO ASSEMBLER  ASCII                                                                02/13/2022 11:02:33 PAGE     2
+
+015D 80EC             58                      SJMP LEFT
+015F 22               59                      ret
+                      60                      
+                      61     
+                      62     
+0160 EA               63     LETTER2: MOV A, R2
+0161 C4               64                      SWAP A 
+0162 2437             65                      ADD A, #37H
+0164 F560             66                      MOV 60H, A
+0166 809B             67                      SJMP HERE
+0168 22               68                      ret
+                      69     
+                      70     
+                      71     END
+A51 MACRO ASSEMBLER  ASCII                                                                02/13/2022 11:02:33 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ASCII. . . . . . .  C ADDR   0130H   A   
+HERE . . . . . . .  C ADDR   0103H   A   
+LEFT . . . . . . .  C ADDR   014BH   A   
+LETTER1. . . . . .  C ADDR   0158H   A   
+LETTER2. . . . . .  C ADDR   0160H   A   
+MAIN . . . . . . .  C ADDR   0100H   A   
+RIGHT. . . . . . .  C ADDR   013DH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

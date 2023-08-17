@@ -1,0 +1,40 @@
+A51 MACRO ASSEMBLER  NEW                                                                  01/21/2022 19:37:54 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\new.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE new.asm SET(SMALL) DEBUG PRINT(.\Listings\new.lst) OBJECT(.\Objects\new
+                      .obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0H
+0000 7485              2     MOV A, #85H
+0002 78F0              3     MOV R0,#0F0H
+0004 8500F0            4     MOV B,00H
+0007 25F0              5     ADD A,B
+0009 F6                6     MOV @R0,A
+000A 5006              7     JNC cy_check
+000C 25F0              8     ADD A,B
+000E F5F0              9     MOV 0F0H,A
+0010 8002             10     JMP stop
+0012 86F0             11     cy_check:MOV 0F0H,@R0
+0014 80FE             12     stop:JMP stop
+                      13     END
+A51 MACRO ASSEMBLER  NEW                                                                  01/21/2022 19:37:54 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+CY_CHECK . . . . .  C ADDR   0012H   A   
+STOP . . . . . . .  C ADDR   0014H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

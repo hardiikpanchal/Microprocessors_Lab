@@ -1,0 +1,1 @@
+"new.asm" SET (SMALL) DEBUG PRINT(.\Listings\new.lst) OBJECT(.\Objects\new.obj) EP

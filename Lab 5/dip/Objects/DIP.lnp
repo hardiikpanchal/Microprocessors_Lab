@@ -1,0 +1,3 @@
+".\Objects\dic.obj" 
+TO ".\Objects\DIP" 
+PRINT(".\Listings\DIP.m51") RAMSIZE(256) 

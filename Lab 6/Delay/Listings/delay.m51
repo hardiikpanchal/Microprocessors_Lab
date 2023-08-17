@@ -1,0 +1,60 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    03/03/2022  23:23:28  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\delay.obj TO .\Objects\delay PRINT (.\Listings\delay.m51) RAMSIZE (256)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\delay.obj (DELAY)
+
+
+LINK MAP OF MODULE:  .\Objects\delay (DELAY)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0145H     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\delay (DELAY)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        DELAY
+  C:0130H         SYMBOL        DELAY
+  C:0102H         SYMBOL        HERE
+  C:013BH         SYMBOL        LOOP
+  C:0100H         SYMBOL        MAIN
+  B:0088H.5       SYMBOL        TF0
+  D:008CH         SYMBOL        TH0
+  D:008AH         SYMBOL        TL0
+  D:0089H         SYMBOL        TMOD
+  B:0088H.4       SYMBOL        TR0
+  C:0000H         LINE#         2
+  C:0100H         LINE#         5
+  C:0102H         LINE#         6
+  C:0130H         LINE#         11
+  C:0133H         LINE#         12
+  C:0136H         LINE#         13
+  C:0139H         LINE#         15
+  C:013BH         LINE#         17
+  C:013EH         LINE#         18
+  C:0140H         LINE#         19
+  C:0142H         LINE#         20
+  C:0144H         LINE#         23
+  -------         ENDMOD        DELAY
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 001CH BYTE ( 1%) *
+******************************************************************************
+
+Program Size: data=8.0 xdata=0 code=325
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
